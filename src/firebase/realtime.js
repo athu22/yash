@@ -104,8 +104,8 @@ export const updateOrderStatus = async (orderId, updates) => {
 };
 
 // Helper function to generate tracking link
-const generateTrackingLink = () => {
-  return `${window.location.origin}/track/${Math.random().toString(36).substr(2, 9)}`;
+const generateTrackingLink = (orderId) => {
+  return `${window.location.origin}/track/${orderId}`;
 };
 
 // Tracking link operations

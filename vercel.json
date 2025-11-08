@@ -1,20 +1,23 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/track/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/((?!api/.*).*)",
       "destination": "/index.html"
     }
   ],
-  "routes": [
+  "headers": [
     {
-      "src": "/track/.*",
-      "dest": "/index.html",
-      "status": 200
-    },
-    {
-      "src": "/[^.]+",
-      "dest": "/index.html",
-      "status": 200
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
     }
   ]
 }

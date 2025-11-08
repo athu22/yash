@@ -105,10 +105,17 @@ const Orders = () => {
     try {
       if (newStatus === 'shipped') {
         // For shipped status, create a tracking link and update both status and link
-        const trackingLink = await createTrackingLink(orderId);
+        const trackingLink = `/track/${orderId}`; // Use orderId directly for tracking
         await updateOrderStatus(orderId, {
           status: newStatus,
-          trackingLink
+          trackingLink,
+          trackingLinkExpired: false
+        });
+      } else if (newStatus === 'delivered' || newStatus === 'cancelled') {
+        // Mark tracking link as expired for completed or cancelled orders
+        await updateOrderStatus(orderId, {
+          status: newStatus,
+          trackingLinkExpired: true
         });
       } else {
         // For other statuses, just update the status string
