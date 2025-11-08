@@ -6,10 +6,13 @@ services:
     staticPublishPath: ./dist
     routes:
       - type: rewrite
-        source: /track/.*
+        source: /track/*
         destination: /index.html
       - type: rewrite
-        source: /.*
+        source: /assets/*
+        destination: /assets/*
+      - type: rewrite
+        source: /*
         destination: /index.html
     headers:
       - path: /*
