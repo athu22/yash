@@ -13,30 +13,40 @@ import Login from '../pages/Login';
 const AdminRoutes = () => {
   const { user } = useAuth();
 
-  // If user is not authenticated, only show login page
-  if (!user) {
-    return (
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    );
-  }
-
-  // Protected routes for authenticated users
   return (
     <Routes>
-      <Route element={<AdminLayout />}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/resharpening" element={<Resharpening />} />
-        <Route path="/salespersons" element={<Salespersons />} />
-        <Route path="/quotations" element={<Quotations />} />
-        <Route path="/orders" element={<Orders />} />
-      </Route>
+      {/* Public route for order tracking */}
       <Route path="/track/:orderId" element={<TrackOrder />} />
-      <Route path="/login" element={<Navigate to="/" replace />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      
+      {/* Authentication routes */}
+      {!user ? (
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </>
+      ) : (
+        <>
+          <Route element={<AdminLayout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/resharpening" element={<Resharpening />} />
+            <Route path="/salespersons" element={<Salespersons />} />
+            <Route path="/quotations" element={<Quotations />} />
+            <Route path="/orders" element={<Orders />} />
+          </Route>
+          <Route path="/login" element={<Navigate to="/" replace />} />
+        </>
+      )}
+      
+      {/* Fallback route - will show TrackOrder for tracking URLs, login for others */}
+      <Route 
+        path="*" 
+        element={
+          window.location.pathname.startsWith('/track/') 
+            ? <TrackOrder /> 
+            : <Navigate to={user ? "/" : "/login"} replace />
+        } 
+      />
     </Routes>
   );
 };

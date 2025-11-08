@@ -7,6 +7,7 @@ export default defineConfig({
   base: '/',
   server: {
     port: 3000,
+    historyApiFallback: true
   },
   build: {
     outDir: 'dist',
@@ -16,6 +17,8 @@ export default defineConfig({
         manualChunks: undefined,
       },
     },
+    assetsDir: 'assets',
+    copyPublicDir: true
   },
   preview: {
     host: true,
