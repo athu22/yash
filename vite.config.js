@@ -7,7 +7,13 @@ export default defineConfig({
   base: '/',
   server: {
     port: 3000,
-    historyApiFallback: true
+    historyApiFallback: {
+      disableDotRule: true,
+      rewrites: [
+        { from: /^\/track\/.*/, to: '/index.html' },
+        { from: /./, to: '/index.html' }
+      ]
+    }
   },
   build: {
     outDir: 'dist',
@@ -18,7 +24,11 @@ export default defineConfig({
       },
     },
     assetsDir: 'assets',
-    copyPublicDir: true
+    copyPublicDir: true,
+    // Ensure index.html is copied to 404.html for proper SPA routing
+    emptyOutDir: true,
+    write: true,
+    cssCodeSplit: false
   },
   preview: {
     host: true,

@@ -1,0 +1,12 @@
+{
+  "routes": [
+    "/",
+    "/login",
+    "/products",
+    "/resharpening",
+    "/salespersons",
+    "/quotations",
+    "/orders",
+    "/track/*"
+  ]
+}
