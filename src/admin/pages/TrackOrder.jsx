@@ -27,11 +27,22 @@ const TrackOrder = () => {
 
   useEffect(() => {
     const fetchOrder = async () => {
+      if (!orderId) {
+        setLoading(false);
+        return;
+      }
+
       try {
         const data = await getTrackingInfo(orderId);
-        setOrder(data);
+        if (!data) {
+          console.error('Order not found');
+          setOrder(null);
+        } else {
+          setOrder(data);
+        }
       } catch (error) {
         console.error('Error fetching order:', error);
+        setOrder(null);
       } finally {
         setLoading(false);
       }
@@ -44,6 +55,25 @@ const TrackOrder = () => {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      </div>
+    );
+  }
+
+  if (!order) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen px-4">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Order Not Found</h1>
+          <p className="text-lg text-gray-600 mb-8">
+            Sorry, we couldn't find the order you're looking for. Please check the tracking link and try again.
+          </p>
+          <a
+            href="/"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+          >
+            Return Home
+          </a>
+        </div>
       </div>
     );
   }

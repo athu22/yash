@@ -21,11 +21,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: undefined,
+        assetFileNames: 'assets/[name].[hash].[ext]',
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js',
       },
     },
     assetsDir: 'assets',
     copyPublicDir: true,
-    // Ensure index.html is copied to 404.html for proper SPA routing
     emptyOutDir: true,
     write: true,
     cssCodeSplit: false

@@ -1,0 +1,12 @@
+{
+  "basename": "/",
+  "routes": [
+    "/",
+    "/login",
+    "/track/*"
+  ],
+  "assets": {
+    "main": "/assets/",
+    "public": "/"
+  }
+}

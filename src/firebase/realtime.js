@@ -71,13 +71,14 @@ export const getSalespersons = async () => {
 export const createOrder = async (orderData) => {
   const ordersRef = ref(db, 'orders');
   const newOrderRef = push(ordersRef);
+  const orderId = newOrderRef.key;
   await set(newOrderRef, {
     ...orderData,
     status: 'pending',
-    trackingLink: generateTrackingLink(), // Generate unique tracking link
+    trackingLink: generateTrackingLink(orderId), // Use orderId for tracking link
     createdAt: Date.now()
   });
-  return newOrderRef.key;
+  return orderId;
 };
 
 export const getOrders = async () => {
